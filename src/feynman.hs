@@ -1,16 +1,25 @@
+data Object = Source String | Vertex String deriving (Show)
+-- Syntax: Source {name} or Vertex {name}
 
-data Object = Source String | Vertex String Int deriving (Show)
--- Syntax: Source {name} or Vertex {name} {# of legs}
+data Propagator = Propagator (Object, Object)
 
-data Propagator = Propagator String String deriving (Show)
--- Syntax: Propagator {name 1} {name 2}
+data Graph = Graph [(Object, Object)]
 
-data Graph = Graph [Object] [Propagator]
+isInt :: (RealFrac a) => a  -> Bool
+isInt x = x == fromInteger (round x)
 
-feynmanGenerate :: Int -> Int -> Int -> [Graph]
--- E -> V -> # of legs -> Feynman diagram
-feynmanGenerate e v legs = []
+graphGenerate :: (Integral a) => [Object] -> a -> [Object]
+graphGenerate olist _ = olist
 
-vertexRemove :: Object -> Object
-vertexRemove (Vertex name legs) = Vertex name (legs-1)
-vertexRemove (Source name) = Source name
+feynmanGenerate :: Int -> Int -> Int -> [Object]
+-- E -> V -> # of legs -> [Feynman diagram]
+feynmanGenerate e v legs
+    | isInt p   = graphGenerate olist (round p)
+    | otherwise = []
+    where elist = [Source (show x) | x <- [1..e]]
+          vlist = [Vertex (show x) | x <- [1..v]]
+          olist = elist ++ (replicateList vlist legs)
+          p = (fromIntegral (2*e + legs*v))/2
+
+replicateList :: [a] -> Int -> [a]
+replicateList xs n = xs >>= replicate n
