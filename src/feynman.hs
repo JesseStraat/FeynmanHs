@@ -7,5 +7,10 @@ data Propagator = Propagator String String deriving (Show)
 
 data Graph = Graph [Object] [Propagator]
 
-feynmanGenerate :: Int -> Int -> Int -> Graph
+feynmanGenerate :: Int -> Int -> Int -> [Graph]
 -- E -> V -> # of legs -> Feynman diagram
+feynmanGenerate e v legs = []
+
+vertexRemove :: Object -> Object
+vertexRemove (Vertex name legs) = Vertex name (legs-1)
+vertexRemove (Source name) = Source name
