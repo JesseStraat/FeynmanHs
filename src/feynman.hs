@@ -2,6 +2,10 @@ import Data.List (splitAt)
 
 data Object = Source String | Vertex String deriving (Show)
 -- Syntax: Source {name} or Vertex {name}
+instance Eq Object where
+    Source x == Source y = x == y
+    Vertex x == Vertex y = x == y
+    Source x == Vertex y = False
 
 data Graph = Graph [(Object, Object)] deriving (Show)
 
@@ -14,13 +18,12 @@ graphGenerate [] 0 = [[]]
 graphGenerate olist n
     | 2*n /= length olist = [[]]
     | otherwise           = [(olist !! 0, olist !! i) : list | i <- [1..(length olist - 1)], list <- (graphGenerate (pop (pop olist i) 0) (n-1))]
---    | otherwise           = [(olist !! 0, olist !! i):list | i <- [1..(length olist - 1)], list <- (graphGenerate (pop (pop olist 0) i) (n-2))]
     where (x:xs) = olist
 
 feynmanGenerate :: Int -> Int -> Int -> [[(Object, Object)]]
 -- E -> V -> # of legs -> [Feynman diagram]
 feynmanGenerate e v legs
-    | isInt p   = graphGenerate olist (round p)
+    | isInt p   = rmdups(graphGenerate olist (round p))
     | otherwise = []
     where elist = [Source (show x) | x <- [1..e]]
           vlist = [Vertex (show x) | x <- [1..v]]
@@ -36,3 +39,9 @@ pop xs n
     | and[(n >= 0), (n < length xs)] = ys ++ zs
     | otherwise       = xs
     where (ys, z:zs) = splitAt n xs
+
+rmdups :: (Eq a) => [a] -> [a]
+rmdups [] = []
+rmdups (x:xs)
+    | x `elem` xs = rmdups xs
+    | otherwise   = x : rmdups xs
