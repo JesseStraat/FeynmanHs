@@ -6,6 +6,7 @@ instance Eq Object where
     Source x == Source y = True
     Vertex x == Vertex y = x == y
     Source x == Vertex y = False
+    x == y = False
 
 data Graph = Graph [(Object, Object)] deriving (Show)
 instance Eq Graph where
