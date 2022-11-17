@@ -1,4 +1,5 @@
 import Data.List (splitAt)
+import Ispermutation (isPermutation)
 
 data Object = Source String | Vertex String deriving (Show)
 -- Syntax: Source {name} or Vertex {name}
