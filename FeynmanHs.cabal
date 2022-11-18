@@ -29,6 +29,6 @@ executable FeynmanHs
 
     -- LANGUAGE extensions used by modules in this package.
     -- other-extensions:
-    build-depends:    hashtables, hashable, base ^>=4.14.3.0
+    build-depends:    unordered-containers, hashable, base ^>=4.14.3.0
     hs-source-dirs:   src
     default-language: Haskell2010
