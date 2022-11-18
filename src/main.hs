@@ -1,17 +1,25 @@
 import Data.List (splitAt)
 import Ispermutation (isPermutation)
+import Data.Hashable (Hashable, hashWithSalt)
 
 data Object = Source String | Vertex String deriving (Show)
 -- Syntax: Source {name} or Vertex {name}
+{- Deprecated eq instance (in case it is needed in the future)
 instance Eq Object where
     Source x == Source y = True
     Vertex x == Vertex y = x == y
     Source x == Vertex y = False
     x == y = False
+-}
+instance Hashable Object where
+    hashWithSalt n (Source x) = hashWithSalt n ""
+    hashWithSalt n (Vertex x) = hashWithSalt n ('v':x)
+
+
 
 data Graph = Graph [(Object, Object)] deriving (Show)
 instance Eq Graph where
-    Graph xs == Graph ys = xs `elem` (permutations ys)
+    Graph xs == Graph ys = isPermutation xs ys
 
 isInt :: (RealFrac a) => a  -> Bool
 isInt x = x == fromInteger (round x)
@@ -54,6 +62,6 @@ rmdups (x:xs)
     | otherwise   = x : rmdups xs
 
 permutations :: [a] -> [[a]]
--- Complexity O(n!)
+-- Complexity O(n!), deprecated
 permutations [] = [[]]
 permutations xs = [(xs !! i) : list | i <- [0..(length xs - 1)], list <- permutations (pop xs i)]
