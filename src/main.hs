@@ -5,15 +5,15 @@ import Data.Hashable (Hashable, hashWithSalt)
 
 -- Data types
 
-data Object = Source String | Vertex String deriving (Show)
--- Syntax: Source {name} or Vertex {name}
+data Object = Source | Vertex String deriving (Show)
+-- Syntax: Source or Vertex {name}
 instance Eq Object where
-    Source x == Source y = True
+    Source == Source = True
     Vertex x == Vertex y = x == y
-    Source x == Vertex y = False
+    Source == Vertex x = False
     x == y = False
 instance Hashable Object where
-    hashWithSalt n (Source x) = hashWithSalt n ""           -- All sources are the same, and should hash to the same value
+    hashWithSalt n (Source) = hashWithSalt n ""           -- All sources are the same, and should hash to the same value
     hashWithSalt n (Vertex x) = hashWithSalt n ('v':x)      -- The 'v' is added to ensure that the vertices can never have the same hash as the sources
 
 data Graph = Graph [(Object, Object)] deriving (Show)       -- A Feynman diagram
@@ -26,10 +26,9 @@ instance Eq Graph where
 feynmanGenerate :: Int -> Int -> Int -> [Graph]
 -- E -> V -> # of legs -> [Feynman diagram]
 feynmanGenerate e v legs
-    -- Complexity O(n!n^2) with n = length graphs
     | isInt p   = rmdups [Graph g | g <- graphs]
     | otherwise = []
-    where elist = [Source (show x) | x <- [1..e]]
+    where elist = [Source | x <- [1..e]]
           vlist = [Vertex (show x) | x <- [1..v]]
           olist = elist ++ (replicateList vlist legs)
           p = (fromIntegral (e + legs*v))/2
