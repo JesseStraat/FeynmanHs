@@ -14,13 +14,13 @@ To use FeynmanHS, you are required to install Cabal. Then, by running `cabal rep
 
 To then generate the Feynman diagrams, run `feynmanGenerate E V #legs`, with `E` the number of external sources, `V` the number of vertices, and `#legs` the number of line segments connected to each vertex.
 
-The output is given as a `Graph`. `Graph`s are lists of pairs of sources and vertices. Each pair, connecting vertices and sources, is a propagator. For example, if E=2, V=0, the (only) Feynman diagram is given by `Graph [(Source "1", Source "2")]`, which means that there is a single propagator connecting two sources, `"1"` and `"2"`.
+The output is given as a `Graph`. `Graph`s are lists of pairs of sources and vertices. Each pair, connecting vertices and sources, is a propagator. For example, if E=2, V=0, the (only) Feynman diagram is given by `Graph [(Source, Source)]`, which means that there is a single propagator connecting two sources. If, on the other hand, we choose E=1, V=1 with #legs=3, we would find the diagram `Graph [(Source, Vertex "1"), (Vertex "1", Vertex "1")]`, which means that the single source is connected to vertex `"1"`, and the two remaining legs of the vertex are connected to each other.
 
 ## Limitations
 
 As noted earlier, not all symmetries are removed from the output of `feynmanGenerate`. The symmetries that _are_ removed are:
 
-1. Interchangeability of external sources: external sources are 'equal' to one another, meaning that `Graph [(Source "1", Source "2")] == Graph [(Source "2", Source "1")]`.
+1. Interchangeability of external sources: external sources are 'equal' to one another, reflected by the fact that `Source` is nameless, as opposed to `Vertex {name}`.
 2. Permutations: `Graph`s whose lists are permutations of one another should be equivalent, since the order of the propagators should not matter.
 
 To make sure all symmetries are removed, one should do a manual review of the output.
