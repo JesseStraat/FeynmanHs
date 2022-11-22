@@ -50,3 +50,5 @@ Graph [(Source,Vertex "2"),(Source,Vertex "2"),(Vertex "1",Vertex "2"),(Vertex "
 Notice that the fourth and eight graphs are equivalent, and so are the fifth and ninth.
 
 The fifth graph is characterised by two sources connected to the same vertex, `"1"`. The remaining two line segments for this vertex are now connected to vertex `"2"`, of which the last two line segments are connected to one another. It corresponds to the following graph:
+
+![image](https://user-images.githubusercontent.com/97634391/203415153-14313e6a-e47d-4a8a-9316-a4b2561aebbe.png)
