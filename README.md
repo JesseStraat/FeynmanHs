@@ -23,4 +23,6 @@ As noted earlier, not all symmetries are removed from the output of `feynmanGene
 1. Interchangeability of external sources: external sources are 'equal' to one another, reflected by the fact that `Source` is nameless, as opposed to `Vertex {name}`.
 2. Permutations: `Graph`s whose lists are permutations of one another should be equivalent, since the order of the propagators should not matter.
 
+Symmetries that are not removed include the interchangeability of vertices: completely interchanging the propagators connected to each vertex (effectively swapping the vertices in the graph) should not produce a different graph. In the future, this symmetry may be included.
+
 To make sure all symmetries are removed, one should do a manual review of the output.
