@@ -26,7 +26,6 @@ instance Eq Graph where
 feynmanGenerate :: Int -> Int -> Int -> [Graph]
 -- E -> V -> # of legs -> [Feynman diagram]
 feynmanGenerate e v legs
-    -- Complexity O(n!n^2) with n = length graphs
     | isInt p   = rmdups [Graph g | g <- graphs]
     | otherwise = []
     where elist = [Source (show x) | x <- [1..e]]
