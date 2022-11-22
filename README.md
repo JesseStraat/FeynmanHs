@@ -14,7 +14,7 @@ To use FeynmanHS, you are required to install Cabal. Then, by running `cabal rep
 
 To then generate the Feynman diagrams, run `feynmanGenerate E V #legs`, with `E` the number of external sources, `V` the number of vertices, and `#legs` the number of line segments connected to each vertex.
 
-The output is given as a `Graph`. `Graph`s are lists of pairs of sources and vertices. Each pair, connecting vertices and sources, is a propagator. For example, if E=2, V=0, the (only) Feynman diagram is given by `Graph [(Source, Source)]`, which means that there is a single propagator connecting two sources. If, on the other hand, we choose E=1, V=1 with #legs=3, we would find the diagram `Graph [(Source, Vertex "1"), (Vertex "1", Vertex "1")]`, which means that the single source is connected to vertex `"1"`, and the two remaining legs of the vertex are connected to each other.
+The output is given as a list of `Graph`s. `Graph`s are lists of pairs of sources and vertices. Each pair, connecting vertices and sources, is a propagator. For example, if E=2, V=0, the (only) Feynman diagram is given by `Graph [(Source, Source)]`, which means that there is a single propagator connecting two sources. If, on the other hand, we choose E=1, V=1 with #legs=3, we would find the diagram `Graph [(Source, Vertex "1"), (Vertex "1", Vertex "1")]`, which means that the single source is connected to vertex `"1"`, and the two remaining legs of the vertex are connected to each other.
 
 ## Limitations
 
@@ -26,3 +26,27 @@ As noted earlier, not all symmetries are removed from the output of `feynmanGene
 Symmetries that are not removed include the interchangeability of vertices: completely interchanging the propagators connected to each vertex (effectively swapping the vertices in the graph) should not produce a different graph. In the future, this symmetry may be included.
 
 To make sure all symmetries are removed, one should do a manual review of the output.
+
+## Example output
+
+To give the reader an impression of how the program works, we will run the following:
+
+`feynmanGenerate 2 2 4`
+
+This should give us all Feynman diagrams with 2 external sources, 2 vertices, and 4 line segments for each vertex. The output is (linebreaks are added for ease of reading):
+
+```
+[Graph [(Source,Source),(Vertex "1",Vertex "1"),(Vertex "1",Vertex "1"),(Vertex "2",Vertex "2"),(Vertex "2",Vertex "2")],
+Graph [(Source,Source),(Vertex "1",Vertex "2"),(Vertex "1",Vertex "2"),(Vertex "1",Vertex "1"),(Vertex "2",Vertex "2")],
+Graph [(Source,Source),(Vertex "1",Vertex "2"),(Vertex "1",Vertex "2"),(Vertex "1",Vertex "2"),(Vertex "1",Vertex "2")],
+Graph [(Source,Vertex "1"),(Source,Vertex "1"),(Vertex "1",Vertex "1"),(Vertex "2",Vertex "2"),(Vertex "2",Vertex "2")],
+Graph [(Source,Vertex "1"),(Source,Vertex "1"),(Vertex "1",Vertex "2"),(Vertex "1",Vertex "2"),(Vertex "2",Vertex "2")],
+Graph [(Source,Vertex "2"),(Source,Vertex "1"),(Vertex "1",Vertex "2"),(Vertex "1",Vertex "1"),(Vertex "2",Vertex "2")],
+Graph [(Source,Vertex "2"),(Source,Vertex "1"),(Vertex "1",Vertex "2"),(Vertex "1",Vertex "2"),(Vertex "1",Vertex "2")],
+Graph [(Source,Vertex "2"),(Source,Vertex "2"),(Vertex "1",Vertex "1"),(Vertex "1",Vertex "1"),(Vertex "2",Vertex "2")],
+Graph [(Source,Vertex "2"),(Source,Vertex "2"),(Vertex "1",Vertex "2"),(Vertex "1",Vertex "2"),(Vertex "1",Vertex "1")]]
+```
+
+Notice that the fourth and eight graphs are equivalent, and so are the fifth and ninth.
+
+The fifth graph is characterised by two sources connected to the same vertex, `"1"`. The remaining two line segments for this vertex are now connected to vertex `"2"`, of which the last two line segments are connected to one another. It corresponds to the following graph:
