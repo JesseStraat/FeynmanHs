@@ -11,7 +11,7 @@ instance Eq Object where
     Source == Source = True
     Vertex x == Vertex y = x == y
     Source == Vertex x = False
-    x == y = False
+    Vertex x == Source = False
 instance Hashable Object where
     hashWithSalt n (Source) = hashWithSalt n ""           -- All sources are the same, and should hash to the same value
     hashWithSalt n (Vertex x) = hashWithSalt n ('v':x)      -- The 'v' is added to ensure that the vertices can never have the same hash as the sources
