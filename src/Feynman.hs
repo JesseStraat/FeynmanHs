@@ -2,7 +2,6 @@ module Feynman(
     feynmanGenerate
 ) where
 
-import Data.List (splitAt)
 import Ispermutation (isPermutation)
 import Data.Hashable (Hashable, hashWithSalt)
 
@@ -14,8 +13,8 @@ data Object = Source | Vertex String deriving (Show)
 instance Eq Object where
     Source == Source = True
     Vertex x == Vertex y = x == y
-    Source == Vertex x = False
-    Vertex x == Source = False
+    Source == Vertex _ = False
+    Vertex _ == Source = False
 instance Hashable Object where
     hashWithSalt n (Source) = hashWithSalt n ""           -- All sources are the same, and should hash to the same value
     hashWithSalt n (Vertex x) = hashWithSalt n ('v':x)      -- The 'v' is added to ensure that the vertices can never have the same hash as the sources
@@ -32,7 +31,7 @@ feynmanGenerate :: Int -> Int -> Int -> [Graph]
 feynmanGenerate e v legs
     | isInt p   = rmdups [Graph g | g <- graphs]
     | otherwise = []
-    where elist = [Source | x <- [1..e]]
+    where elist = [Source | _ <- [1..e]]
           vlist = [Vertex (show x) | x <- [1..v]]
           olist = elist ++ (replicateList vlist legs)
           p = (fromIntegral (e + legs*v))/2
@@ -47,7 +46,6 @@ graphGenerate [] 0 = [[]]
 graphGenerate olist n
     | 2*n /= length olist = [[]]
     | otherwise           = [(olist !! 0, olist !! i) : list | i <- [1..(length olist - 1)], list <- (graphGenerate (pop (pop olist i) 0) (n-1))]
-    where (x:xs) = olist
 
 rmdups :: (Eq a) => [a] -> [a]
 -- Complexity O(n^2)
@@ -70,9 +68,4 @@ pop [] _ = []
 pop xs n
     | and[(n >= 0), (n < length xs)] = ys ++ zs
     | otherwise       = xs
-    where (ys, z:zs) = splitAt n xs
-
-permutations :: [a] -> [[a]]
--- Complexity O(n!), deprecated
-permutations [] = [[]]
-permutations xs = [(xs !! i) : list | i <- [0..(length xs - 1)], list <- permutations (pop xs i)]
+    where (ys, _:zs) = splitAt n xs

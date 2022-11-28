@@ -26,7 +26,7 @@ main = do
     putStrLn ""
     putStrLn "Finished!"
     putStr "Press 'enter' to close the program."
-    foo <- withEcho False getLine
+    _ <- withEcho False getLine
     return ()
 
 printList :: (Show a) => [a] -> IO()
