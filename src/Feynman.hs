@@ -34,6 +34,7 @@ feynmanGenerate e v legs
     where elist = [Source | _ <- [1..e]]
           vlist = [Vertex (show x) | x <- [1..v]]
           olist = elist ++ (replicateList vlist legs)
+          p :: Double
           p = (fromIntegral (e + legs*v))/2
           graphs = graphGenerate olist (round p)
 
@@ -67,5 +68,5 @@ pop :: [a] -> Int -> [a]
 pop [] _ = []
 pop xs n
     | and[(n >= 0), (n < length xs)] = ys ++ zs
-    | otherwise       = xs
+    | otherwise                     = xs
     where (ys, _:zs) = splitAt n xs
