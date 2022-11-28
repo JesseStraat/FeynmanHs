@@ -1,34 +1,72 @@
-cabal-version:      2.4
-name:               FeynmanHs
-version:            0.1.0.0
+cabal-version: 1.12
 
--- A short (one-line) description of the package.
--- synopsis:
+-- This file has been generated from package.yaml by hpack version 0.35.0.
+--
+-- see: https://github.com/sol/hpack
 
--- A longer description of the package.
--- description:
+name:           FeynmanHs
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/JesseStraat/FeynmanHs#readme>
+homepage:       https://github.com/JesseStraat/FeynmanHs#readme
+bug-reports:    https://github.com/JesseStraat/FeynmanHs/issues
+author:         Jesse Straat
+maintainer:     jessestraat1@gmail.com
+copyright:      2022 Jesse Straat
+license:        MIT
+license-file:   LICENSE
+build-type:     Simple
+extra-source-files:
+    README.md
 
--- A URL where users can report bugs.
--- bug-reports:
+source-repository head
+  type: git
+  location: https://github.com/JesseStraat/FeynmanHs
 
--- The license under which the package is released.
--- license:
-author:             Jesse Straat
-maintainer:         jessestraat1@gmail.com
+library
+  exposed-modules:
+      Feynman
+      Ispermutation
+      IspermutationIO
+      Scripts
+  other-modules:
+      Paths_FeynmanHs
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      base >=4.7 && <5
+    , hashable
+    , hashtables
+    , unordered-containers
+  default-language: Haskell2010
 
--- A copyright notice.
--- copyright:
--- category:
-extra-source-files: CHANGELOG.md
+executable FeynmanHs-exe
+  main-is: Main.hs
+  other-modules:
+      Paths_FeynmanHs
+  hs-source-dirs:
+      app
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      FeynmanHs
+    , base >=4.7 && <5
+    , hashable
+    , hashtables
+    , unordered-containers
+  default-language: Haskell2010
 
-executable FeynmanHs
-    main-is:          main.hs
-
-    -- Modules included in this executable, other than Main.
-    other-modules:    Ispermutation
-
-    -- LANGUAGE extensions used by modules in this package.
-    -- other-extensions:
-    build-depends:    unordered-containers, hashable, base ^>=4.14.3.0
-    hs-source-dirs:   src
-    default-language: Haskell2010
+test-suite FeynmanHs-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  other-modules:
+      Paths_FeynmanHs
+  hs-source-dirs:
+      test
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      FeynmanHs
+    , base >=4.7 && <5
+    , hashable
+    , hashtables
+    , unordered-containers
+  default-language: Haskell2010
