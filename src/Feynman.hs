@@ -1,3 +1,7 @@
+module Feynman(
+    feynmanGenerate
+) where
+
 import Data.List (splitAt)
 import Ispermutation (isPermutation)
 import Data.Hashable (Hashable, hashWithSalt)

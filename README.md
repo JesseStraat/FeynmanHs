@@ -10,9 +10,9 @@ This is also my first proper project in Haskell, so it is probably not thoroughl
 
 ## Usage
 
-To use FeynmanHS, you are required to install Cabal. Then, by running `cabal repl` in the project's root directory, the scripts are compiled.
+For beginning users, one is required to install Stack. Then, you should run `stack build` in the root of this project to generate a `.exe` file. If you run this file, you will be guided through generating a list of Feynman diagrams.
 
-To then generate the Feynman diagrams, run `feynmanGenerate E V #legs`, with `E` the number of external sources, `V` the number of vertices, and `#legs` the number of line segments connected to each vertex.
+To generate Feynman diagrams directly, run `feynmanGenerate E V #legs`, as imported from `Feynman.hs`, with `E` the number of external sources, `V` the number of vertices, and `#legs` the number of line segments connected to each vertex.
 
 The output is given as a list of `Graph`s. `Graph`s are lists of pairs of sources and vertices. Each pair, connecting vertices and sources, is a propagator. For example, if E=2, V=0, the (only) Feynman diagram is given by `Graph [(Source, Source)]`, which means that there is a single propagator connecting two sources. If, on the other hand, we choose E=1, V=1 with #legs=3, we would find the diagram `Graph [(Source, Vertex "1"), (Vertex "1", Vertex "1")]`, which means that the single source is connected to vertex `"1"`, and the two remaining legs of the vertex are connected to each other.
 
